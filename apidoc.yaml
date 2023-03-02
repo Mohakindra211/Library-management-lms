@@ -1,0 +1,234 @@
+openapi: 3.0.0
+info:
+  title: Library Management API
+  description: API for managing books and users in a library
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /books:
+    get:
+      summary: Get all books
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: A list of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+    post:
+      summary: Create a new book
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Book object to create
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Book"
+        required: true
+      responses:
+        "201":
+          description: The created book object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+  /books/{id}:
+    get:
+      summary: Get a book by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the book to get
+      responses:
+        "200":
+          description: The book object with the specified ID
+          content:
+            application/json:
+              schemas:
+              $ref: "#/components/schemas/Book"
+    put:
+      summary: Update a book by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the book to update
+      requestBody:
+        description: Book object to update
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Book"
+        required: true
+      responses:
+        "200":
+          description: The updated book object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+    delete:
+      summary: Delete a book by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the book to delete
+      responses:
+        "204":
+          description: Book deleted successfully
+  /users:
+    get:
+      summary: Get all users
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+    post:
+      summary: Create a new user
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: User object to create
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        "201":
+          description: The created user object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /users/{id}:
+    get:
+      summary: Get a user by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the user to get
+      responses:
+        "200":
+          description: The user object with the specified ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    put:
+      summary: Update a user by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the user to update
+      requestBody:
+        description: User object to update
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        "200":
+          description: The updated user object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    delete:
+      summary: Delete a user by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the user to delete
+      responses:
+        "204":
+          description: User deleted successfully
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the book
+        title:
+          type: string
+          description: The title of the book
+        author:
+          type:
+          description: The author of the book
+        publisher:
+          type: string
+          description: The publisher of the book
+        genre:
+          type: string
+          description: The genre of the book
+        ISBN:
+          type: string
+          description: The ISBN of the book
+      required:
+        - title
+        - author
+        - publisher
+        - genre
+        - ISBN
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the user
+        username:
+          type: string
+          description: The username of the user
+        password:
+          type: string
+          description: The password of the user
+      required:
+        - username
+        - password
